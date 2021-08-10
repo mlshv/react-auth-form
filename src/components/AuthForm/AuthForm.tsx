@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import { Formik, Field, Form, FormikHelpers, FieldProps } from 'formik'
 
 import { NetworkError, ValidationError } from '../../errors'
@@ -33,6 +33,14 @@ const AuthForm: React.FC<Props> = ({
     emailInputRef?.current?.focus()
   }, [])
 
+  const shakeForm = useCallback(() => {
+    rootRef.current?.classList.add(styles.shake)
+
+    setTimeout(() => {
+      rootRef.current?.classList.remove(styles.shake)
+    }, 400)
+  }, [])
+
   return (
     <Formik
       initialValues={initialValues}
@@ -58,11 +66,7 @@ const AuthForm: React.FC<Props> = ({
         } catch (e) {
           console.error(e)
 
-          rootRef.current?.classList.add(styles.shake)
-
-          setTimeout(() => {
-            rootRef.current?.classList.remove(styles.shake)
-          }, 400)
+          shakeForm()
 
           if (e instanceof ValidationError) {
             setErrors({ formError: e.message })
@@ -76,7 +80,7 @@ const AuthForm: React.FC<Props> = ({
         setSubmitting(false)
       }}
     >
-      {({ isSubmitting, handleSubmit }) => (
+      {({ isSubmitting, validateForm, handleSubmit }) => (
         <Form ref={rootRef}>
           <h1>Sign in</h1>
           <Field name="email">
@@ -128,10 +132,16 @@ const AuthForm: React.FC<Props> = ({
           <Button
             inProgress={isSubmitting}
             type="submit"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault()
 
               if (!isSubmitting) {
+                await validateForm().then(({ formError }) => {
+                  if (formError) {
+                    shakeForm()
+                  }
+                })
+
                 handleSubmit()
               }
             }}
