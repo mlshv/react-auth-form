@@ -1,0 +1,19 @@
+.focusable {
+  transition: box-shadow 0.25s;
+  outline: none;
+}
+.focusable:focus {
+  box-shadow: rgb(58 151 212 / 36%) 0px 0px 0px 4px;
+}
+
+.textInput {
+  composes: focusable;
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  font-size: 1rem;
+  border-radius: 3px;
+}

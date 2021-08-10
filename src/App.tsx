@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useState } from 'react'
+import AuthForm, { AuthFormValues } from './components/AuthForm/AuthForm'
+import { NetworkError, ValidationError } from './errors'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+async function mockSubmitResponse() {
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000)
+  })
+
+  const responses = [
+    () => {
+      // ok
+    },
+    () => {
+      throw new NetworkError()
+    },
+    () => {
+      throw new ValidationError('Incorrect login or password')
+    },
+    () => {
+      throw new Error('Woops!')
+    },
+  ]
+
+  const randomResponseIndex = Math.floor(Math.random() * responses.length)
+
+  return responses[randomResponseIndex]()
 }
 
-export default App;
+function App() {
+  const [email, setEmail] = useState<string>()
+
+  const handleSubmit = useCallback(async (values: AuthFormValues) => {
+    await mockSubmitResponse()
+
+    setEmail(values.email)
+  }, [])
+
+  return (
+    <div className="App" style={{ width: 300, margin: '0 auto' }}>
+      {email ? (
+        <div>
+          <p>Logged in as {email}</p>
+          <button onClick={() => setEmail(undefined)}>Log out</button>
+        </div>
+      ) : (
+        <AuthForm onSubmit={handleSubmit} />
+      )}
+    </div>
+  )
+}
+
+export default App

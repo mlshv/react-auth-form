@@ -1,0 +1,3 @@
+.root {
+  composes: textInput from '../composes.css';
+}
