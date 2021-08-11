@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-auth-form/static/css/main.9f982276.chunk.css",
-    "main.js": "/react-auth-form/static/js/main.45f6b03b.chunk.js",
-    "main.js.map": "/react-auth-form/static/js/main.45f6b03b.chunk.js.map",
+    "main.js": "/react-auth-form/static/js/main.28699e58.chunk.js",
+    "main.js.map": "/react-auth-form/static/js/main.28699e58.chunk.js.map",
     "runtime-main.js": "/react-auth-form/static/js/runtime-main.9c3777f7.js",
     "runtime-main.js.map": "/react-auth-form/static/js/runtime-main.9c3777f7.js.map",
     "static/js/2.5445cb61.chunk.js": "/react-auth-form/static/js/2.5445cb61.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.9c3777f7.js",
     "static/js/2.5445cb61.chunk.js",
     "static/css/main.9f982276.chunk.css",
-    "static/js/main.45f6b03b.chunk.js"
+    "static/js/main.28699e58.chunk.js"
   ]
 }
