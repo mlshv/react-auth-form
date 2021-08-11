@@ -45,6 +45,7 @@ const AuthForm: React.FC<Props> = ({
     <Formik
       initialValues={initialValues}
       validateOnBlur={false}
+      validateOnChange={false}
       validate={(values) => {
         if (!values.email) {
           return { formError: 'Please enter email' }
